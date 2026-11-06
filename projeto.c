@@ -294,9 +294,14 @@ int main(void) {
         printf("Programa encerrado.\n");
         return 1;
     }
+    
+    if (!fazerLogin()) { /* depois do carregarDLL() */
+ printf("Acesso negado.\n");
+ FreeLibrary(dll);
+ return 1;
+}
 
     int opcao = -1;
-    fazerLogin();
     while (opcao != 0) {
         exibirMenu();
         opcao = lerInteiro("\nDigite a opcao desejada: ");
