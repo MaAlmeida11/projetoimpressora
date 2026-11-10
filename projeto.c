@@ -262,7 +262,8 @@ void imprimirCodigoBarras(void) {
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
  return; /* não está: avisa e SAI da função */
  }
-int retorno = ImpressaoCodigoBarras(8, "{A012345678912", 100, 2, 3);
+int retorno = ImpressaoCodigoBarras(8, "{A012345678912}", 100, 2, 3);
+Corte(5);
 }
 
 void imprimirXMLSAT(void) {
@@ -300,7 +301,7 @@ int retorno = ImprimeXMLCancelamentoSAT(dadosXML, ASS_QRCODE, 0);
     	
     	/* le o arquivo XML (na raiz do projeto) para a memoria */
         //char *dadosXML = lerArquivo("CANC_SAT.xml");
-        
+        Corte(5);
 }
 
 void abrirGavetaElgin(void) {
@@ -336,9 +337,9 @@ void exibirMenu(void) {
     printf("--------------------------------------\n");
     printf("5  - Imprimir QR Code\n");    
     printf("--------------------------------------\n");
-    printf("6  - Imprimir código de barras\n");    
+    printf("6  - Imprimir codigo de barras\n");    
     printf("--------------------------------------\n");
-    printf("7  - Imprimir XML SAT");    
+    printf("7  - Imprimir XML SAT\n");    
     printf("--------------------------------------\n");
     printf("8  - Imprimir XML de cancelamento SAT\n");    
     printf("--------------------------------------\n");
