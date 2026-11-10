@@ -167,9 +167,31 @@ static char *lerArquivo(const char *caminho) {
     return conteudo;
 }
 
+int fazerLogin(void) {
+ char usuario[50], senha[50];
+ for(tentativa = 3; tentativa >= 1; tentativa--) {
+ 	printf("Digite o usuario: \n");
+ 	scanf("%s", &usuario);
+ 	printf("Digite a senha: \n");
+ 	scanf("%s", &senha);
+ /* pedir usuário e senha com capturarEntrada(...) */
+ if (strcmp(usuario, "admin") == 0 && strcmp(senha, "1234") == 0) {
+ 	printf("Acesso liberado");
+ 	return 1;
+ } else{
+ 	printf("Tentativas restantes: %i\n", tentativa);
+ }
+ /* se errou: mostrar quantas tentativas restam (3 - tentativa) */
+ }
+ printf("Tentativas esgotadas");
+ /* chegou aqui? errou as 3 vezes: avisar e return 0; */
+ return 0;
+}
+
 /* ===================== Funcoes da impressora ===================== */
 
 void configurarConexao(void) {
+	fazerLogin();
     if (!conexaoAberta) {
         tipo = lerInteiro("Digite o tipo de conexao (1 para USB, 2 para Serial, etc.): ");
         capturarEntrada("Digite o modelo da impressora: ", modelo, sizeof(modelo));
@@ -196,22 +218,58 @@ void abrirConexao(void) {
 }
 
 void fecharConexao(void) {
-    
+    int retorno = FechaConexaoImpressora();	
 }
 
 void imprimirTexto(void) {
-   
+	if (!conexaoAberta) { /* 1) conexão aberta? */
+ printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
+ return; /* não está: avisa e SAI da função */
+ }
+ char texto[200]; /* 2) só agora pergunta */
+ capturarEntrada("Texto a imprimir: ", texto, sizeof(texto));
+ int copias = lerInteiro("Quantas copias? ");
+ int i;
+ for(i = 1; i <= copias; i++) { /* laço: repete a impressão */
+ int retorno = ImpressaoTexto(texto, 1, 4, 0); /* 3) chama o comando */
+ if (retorno >= 0) { /* 4) confere o retorno */
+ printf("Copia %d impressa!\n", i);
+ } else {
+ printf("Erro ao imprimir. Codigo: %d\n", retorno);
+ }
+ }
+ Corte(5); /* corta o papel */
 }
 
+
 void imprimirQRCode(void) {
-    
+    int dados;
+int retorno = ImpressaoQRCode(dados, 6, 4);
 }
 
 void imprimirCodigoBarras(void) {
     
+int retorno = ImpressaoCodigoBarras(8, "{A012345678912", 100, 2, 3);
 }
 
 void imprimirXMLSAT(void) {
+	if (!conexaoAberta) {
+ printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
+ return;
+ }
+ char *dadosXML = lerArquivo("XMLSAT.xml");
+ if (dadosXML == NULL) { /* arquivo não encontrado */
+ printf("Nao foi possivel ler o XMLSAT.xml\n");
+ return;
+ }
+ int retorno = ImprimeXMLSAT(dadosXML, 0);
+ Corte(5);
+ free(dadosXML); /* devolve a memória */
+ if (retorno == 0) {
+ printf("XML SAT impresso!\n");
+ } else {
+ printf("Erro ao imprimir XML SAT. Codigo: %d\n", retorno);
+ 
     
         /* le o arquivo XML (na raiz do projeto) para a memoria */
         //char *dadosXML = lerArquivo("XMLSAT.xml");
@@ -219,6 +277,8 @@ void imprimirXMLSAT(void) {
 }
 
 void imprimirXMLCancelamentoSAT(void) {
+	
+int retorno = ImprimeXMLCancelamentoSAT(dadosXML, ASS_QRCODE, 0);
     	
     	/* le o arquivo XML (na raiz do projeto) para a memoria */
         //char *dadosXML = lerArquivo("CANC_SAT.xml");
@@ -227,14 +287,16 @@ void imprimirXMLCancelamentoSAT(void) {
 
 void abrirGavetaElgin(void) {
     
+int retorno = AbreGavetaElgin(1, 50, 50);
 }
 
 void abrirGaveta(void) {
     
+int retorno = AbreGaveta(1, 5, 10);
 }
 
 void emitirSinalSonoro(void) {
-    
+    int retorno = SinalSonoro(4, 50, 5);
 }
 
 void exibirMenu(void) {
@@ -269,25 +331,6 @@ void exibirMenu(void) {
 }
 
 /* ===================== Programa principal ===================== */
-
-int fazerLogin(void) {
- char usuario[50], senha[50];
- for(tentativa = 1; tentativa <= 3; tentativa++) {
- 	scanf("%s", &usuario);
- 	scanf("%i", &senha);
- /* pedir usuário e senha com capturarEntrada(...) */
- if (strcmp(usuario, "admin") == 0 && strcmp(senha, "1234") == 0) {
- 	printf("Acesso liberado");
- 	return 1;
- } else{
- 	printf("Tentativas restantes: %i", tentativa);
- }
- /* se errou: mostrar quantas tentativas restam (3 - tentativa) */
- }
- printf("Tentativas esgotadas");
- /* chegou aqui? errou as 3 vezes: avisar e return 0; */
- return 0;
-}
 
 int main(void) {
     if (!carregarDLL()) {
