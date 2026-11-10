@@ -218,6 +218,10 @@ void abrirConexao(void) {
 }
 
 void fecharConexao(void) {
+	if (!conexaoAberta) { /* 1) conexão aberta? */
+ printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
+ return; /* não está: avisa e SAI da função */
+ }
     int retorno = FechaConexaoImpressora();	
 }
 
@@ -244,12 +248,20 @@ AvancaPapel(1);
 
 
 void imprimirQRCode(void) {
-    const char* dados;
+	if (!conexaoAberta) { /* 1) conexão aberta? */
+ printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
+ return; /* não está: avisa e SAI da função */
+ }
+    const char * dados = "https://github.com/MaAlmeida11/projetoimpressora";
 int retorno = ImpressaoQRCode(dados, 6, 4);
+Corte(5);
 }
 
 void imprimirCodigoBarras(void) {
-    
+    if (!conexaoAberta) { /* 1) conexão aberta? */
+ printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
+ return; /* não está: avisa e SAI da função */
+ }
 int retorno = ImpressaoCodigoBarras(8, "{A012345678912", 100, 2, 3);
 }
 
@@ -279,6 +291,10 @@ void imprimirXMLSAT(void) {
 }
 
 void imprimirXMLCancelamentoSAT(void) {
+	if (!conexaoAberta) { /* 1) conexão aberta? */
+ printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
+ return; /* não está: avisa e SAI da função */
+ }
 	char *dadosXML = lerArquivo("CANC_SAT.xml");
 int retorno = ImprimeXMLCancelamentoSAT(dadosXML, ASS_QRCODE, 0);
     	
@@ -298,6 +314,10 @@ int retorno = AbreGaveta(1, 5, 10);
 }
 
 void emitirSinalSonoro(void) {
+	if (!conexaoAberta) { /* 1) conexão aberta? */
+ printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
+ return; /* não está: avisa e SAI da função */
+ }
     int retorno = SinalSonoro(4, 50, 5);
 }
 
