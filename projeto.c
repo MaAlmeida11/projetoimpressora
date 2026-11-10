@@ -179,7 +179,7 @@ int fazerLogin(void) {
  	printf("Acesso liberado");
  	return 1;
  } else{
- 	printf("Tentativas restantes: %i\n", tentativa);
+ 	printf("Tentativas restantes: %i\n", tentativa - 1);
  }
  /* se errou: mostrar quantas tentativas restam (3 - tentativa) */
  }
@@ -243,7 +243,7 @@ AvancaPapel(1);
  printf("Erro ao imprimir. Codigo: %d\n", retorno);
  }
  }
- Corte(5); /* corta o papel */
+ Corte(3); /* corta o papel */
 }
 
 
@@ -254,7 +254,7 @@ void imprimirQRCode(void) {
  }
     const char * dados = "https://github.com/MaAlmeida11/projetoimpressora";
 int retorno = ImpressaoQRCode(dados, 6, 4);
-Corte(5);
+Corte(3);
 }
 
 void imprimirCodigoBarras(void) {
@@ -263,7 +263,7 @@ void imprimirCodigoBarras(void) {
  return; /* não está: avisa e SAI da função */
  }
 int retorno = ImpressaoCodigoBarras(8, "{A012345678912}", 100, 2, 3);
-Corte(5);
+Corte(3);
 }
 
 void imprimirXMLSAT(void) {
@@ -277,7 +277,7 @@ void imprimirXMLSAT(void) {
  return;
  }
  int retorno = ImprimeXMLSAT(dadosXML, 0);
- Corte(5);
+ Corte(3);
  free(dadosXML); /* devolve a memória */
  if (retorno == 0) {
  printf("XML SAT impresso!\n");
@@ -301,7 +301,7 @@ int retorno = ImprimeXMLCancelamentoSAT(dadosXML, ASS_QRCODE, 0);
     	
     	/* le o arquivo XML (na raiz do projeto) para a memoria */
         //char *dadosXML = lerArquivo("CANC_SAT.xml");
-        Corte(5);
+        Corte(3);
 }
 
 void abrirGavetaElgin(void) {
