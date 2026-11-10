@@ -188,10 +188,10 @@ int fazerLogin(void) {
  return 0;
 }
 
+fazerLogin();
 /* ===================== Funcoes da impressora ===================== */
 
 void configurarConexao(void) {
-	fazerLogin();
     if (!conexaoAberta) {
         tipo = lerInteiro("Digite o tipo de conexao (1 para USB, 2 para Serial, etc.): ");
         capturarEntrada("Digite o modelo da impressora: ", modelo, sizeof(modelo));
@@ -230,8 +230,9 @@ void imprimirTexto(void) {
  capturarEntrada("Texto a imprimir: ", texto, sizeof(texto));
  int copias = lerInteiro("Quantas copias? ");
  int i;
- for(i = 1; i <= copias; i++) { /* laço: repete a impressão */
+ for(i = 0; i <= copias; i++) { /* laço: repete a impressão */
  int retorno = ImpressaoTexto(texto, 1, 4, 0); /* 3) chama o comando */
+AvancaPapel(1);
  if (retorno >= 0) { /* 4) confere o retorno */
  printf("Copia %d impressa!\n", i);
  } else {
@@ -243,7 +244,7 @@ void imprimirTexto(void) {
 
 
 void imprimirQRCode(void) {
-    int dados;
+    const char* dados;
 int retorno = ImpressaoQRCode(dados, 6, 4);
 }
 
@@ -275,9 +276,10 @@ void imprimirXMLSAT(void) {
         //char *dadosXML = lerArquivo("XMLSAT.xml");
         
 }
+}
 
 void imprimirXMLCancelamentoSAT(void) {
-	
+	char *dadosXML = lerArquivo("CANC_SAT.xml");
 int retorno = ImprimeXMLCancelamentoSAT(dadosXML, ASS_QRCODE, 0);
     	
     	/* le o arquivo XML (na raiz do projeto) para a memoria */
@@ -306,9 +308,9 @@ void exibirMenu(void) {
 
     printf("1  - Configurar Conexao\n");    
     printf("--------------------------------------\n");
-    printf("2  - Abrir conexão\n");    
+    printf("2  - Abrir conexao\n");    
     printf("--------------------------------------\n");
-    printf("3  - Fechar conexão\n");    
+    printf("3  - Fechar conexao\n");    
     printf("--------------------------------------\n");
     printf("4  - Imprimir texto\n");    
     printf("--------------------------------------\n");
@@ -396,6 +398,7 @@ int main(void) {
         		
         		case 0:
         		//Sair();
+        		fecharConexao();
         		break;
 		}
 
