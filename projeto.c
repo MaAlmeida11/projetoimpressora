@@ -262,7 +262,7 @@ void imprimirCodigoBarras(void) {
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
  return; /* não está: avisa e SAI da função */
  }
-int retorno = ImpressaoCodigoBarras(8, "{A012345678912}", 100, 2, 3);
+int retorno = ImpressaoCodigoBarras(8, "{A012345678912", 100, 2, 3);
 Corte(3);
 }
 
@@ -319,7 +319,7 @@ void emitirSinalSonoro(void) {
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
  return; /* não está: avisa e SAI da função */
  }
-    int retorno = SinalSonoro(4, 50, 5);
+    int retorno = SinalSonoro(2, 50, 5);
 }
 
 void exibirMenu(void) {
