@@ -218,11 +218,8 @@ void abrirConexao(void) {
 }
 
 void fecharConexao(void) {
-	if (!conexaoAberta) { /* 1) conexão aberta? */
- printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
- return; /* não está: avisa e SAI da função */
- }
     int retorno = FechaConexaoImpressora();	
+    conexaoAberta = 0;
 }
 
 void imprimirTexto(void) {
@@ -305,12 +302,18 @@ int retorno = ImprimeXMLCancelamentoSAT(dadosXML, ASS_QRCODE, 0);
 }
 
 void abrirGavetaElgin(void) {
-    
+    if (!conexaoAberta) { /* 1) conexão aberta? */
+ printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
+ return; /* não está: avisa e SAI da função */
+ }
 int retorno = AbreGavetaElgin(1, 50, 50);
 }
 
 void abrirGaveta(void) {
-    
+    if (!conexaoAberta) { /* 1) conexão aberta? */
+ printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
+ return; /* não está: avisa e SAI da função */
+ }
 int retorno = AbreGaveta(1, 5, 10);
 }
 
@@ -418,6 +421,7 @@ int main(void) {
         		break;
         		
         		case 0:
+        			printf("Saindo...");
         		//Sair();
         		fecharConexao();
         		break;
