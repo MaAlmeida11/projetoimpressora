@@ -259,6 +259,7 @@ void fecharConexao(void)
 {
     int retorno = FechaConexaoImpressora();
     conexaoAberta = 0;
+    printf("conexao com a impressora fechada");
 }
 
 /* Verifica se ha conexao ativa, le um texto e a quantidade de copias desejada,
@@ -278,9 +279,9 @@ void imprimirTexto(void)
     {                                                 /* la�o: repete a impress�o */
         int retorno = ImpressaoTexto(texto, 1, 4, 0); /* 3) chama o comando */
         AvancaPapel(1);
-        if (retorno >= 0)
+        if (retorno)
         { /* 4) confere o retorno */
-            printf("Copia %d impressa!\n", i);
+            printf("Copia %d impressa!\n", i+1);
         }
         else
         {
@@ -303,6 +304,7 @@ void imprimirQRCode(void)
     capturarEntrada("Conteudo do QrCode: ", dados, sizeof(dados));
     int retorno = ImpressaoQRCode(dados, 6, 4);
     Corte(3);
+    printf("QR code esta pronto");
 }
 
 /* Imprime um codigo de barras padrao (tipo 8 / CODE128) com valor fixo e realiza o corte do papel. */
@@ -315,6 +317,7 @@ void imprimirCodigoBarras(void)
     }
     int retorno = ImpressaoCodigoBarras(8, "{A012345678912", 100, 2, 3);
     Corte(3);
+    printf("Codigo de barra esta pronto");
 }
 
 /* Carrega o arquivo 'XMLSAT.xml' para a memoria, envia o conteudo para impressao fiscal SAT,
@@ -363,6 +366,7 @@ void imprimirXMLCancelamentoSAT(void)
     /* le o arquivo XML (na raiz do projeto) para a memoria */
     // char *dadosXML = lerArquivo("CANC_SAT.xml");
     Corte(3);
+    printf("XMLSAT de cancelamento pronto");
 }
 
 /* Envia um pulso eletrico padrao Elgin (pino 1, 50ms) para abertura de gaveta de dinheiro. */
@@ -374,6 +378,7 @@ void abrirGavetaElgin(void)
         return; /* n�o est�: avisa e SAI da fun��o */
     }
     int retorno = AbreGavetaElgin(1, 50, 50);
+    printf("Gaveta elgin aberta");
 }
 
 /* Envia um pulso eletrico generico (pino 1, ti=5, tf=10) para abertura de gaveta de dinheiro. */
@@ -385,6 +390,7 @@ void abrirGaveta(void)
         return; /* n�o est�: avisa e SAI da fun��o */
     }
     int retorno = AbreGaveta(1, 5, 10);
+    printf("Gaveta aberta");
 }
 
 /* Aciona o buzzer interno da impressora emitindo 2 bipes curtos. */
@@ -396,6 +402,7 @@ void emitirSinalSonoro(void)
         return; /* n�o est�: avisa e SAI da fun��o */
     }
     int retorno = SinalSonoro(2, 50, 5);
+    printf("Sinal sonoro iniciado");
 }
 
 /* Exibe no console a lista numerada com todas as operacoes disponiveis no sistema. */
@@ -505,7 +512,12 @@ int main(void)
             // Sair();
             fecharConexao();
             break;
+            
+            default:
+        	printf("Opcao invalida, digite novamente");
+        	break;
         }
+        
 
         //...
     }
