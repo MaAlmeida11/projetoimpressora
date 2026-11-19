@@ -300,7 +300,7 @@ void imprimirQRCode(void)
         return; /* n�o est�: avisa e SAI da fun��o */
     }
     char dados[200];
-    capturarEntrada("Conteúdo do QrCode: ", dados, sizeof(dados));
+    capturarEntrada("Conteudo do QrCode: ", dados, sizeof(dados));
     int retorno = ImpressaoQRCode(dados, 6, 4);
     Corte(3);
 }
