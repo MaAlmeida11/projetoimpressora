@@ -274,7 +274,7 @@ void imprimirTexto(void)
     capturarEntrada("Texto a imprimir: ", texto, sizeof(texto));
     int copias = lerInteiro("Quantas copias? ");
     int i;
-    for (i = 0; i <= copias; i++)
+    for (i = 0; i < copias; i++)
     {                                                 /* la�o: repete a impress�o */
         int retorno = ImpressaoTexto(texto, 1, 4, 0); /* 3) chama o comando */
         AvancaPapel(1);
