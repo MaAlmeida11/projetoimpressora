@@ -168,18 +168,19 @@ static char *lerArquivo(const char *caminho) {
 }
 
 int fazerLogin(void) {
+    printf("========== LOGIN ==========\n");
  char usuario[50], senha[50];
  for(tentativa = 3; tentativa >= 1; tentativa--) {
  	printf("Digite o usuario: \n");
  	scanf("%s", &usuario);
  	printf("Digite a senha: \n");
  	scanf("%s", &senha);
- /* pedir usuário e senha com capturarEntrada(...) */
+ /* pedir usuï¿½rio e senha com capturarEntrada(...) */
  if (strcmp(usuario, "admin") == 0 && strcmp(senha, "1234") == 0) {
- 	printf("Acesso liberado");
+ 	printf("Login realizado com sucesso! Bem-vindo, %s.\n", usuario);
  	return 1;
  } else{
- 	printf("Tentativas restantes: %i\n", tentativa - 1);
+ 	printf("Usuario ou senha incorretos. Tentativas restantes: %i\n", tentativa - 1);
  }
  /* se errou: mostrar quantas tentativas restam (3 - tentativa) */
  }
@@ -223,15 +224,15 @@ void fecharConexao(void) {
 }
 
 void imprimirTexto(void) {
-	if (!conexaoAberta) { /* 1) conexão aberta? */
+	if (!conexaoAberta) { /* 1) conexï¿½o aberta? */
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
- return; /* não está: avisa e SAI da função */
+ return; /* nï¿½o estï¿½: avisa e SAI da funï¿½ï¿½o */
  }
- char texto[200]; /* 2) só agora pergunta */
+ char texto[200]; /* 2) sï¿½ agora pergunta */
  capturarEntrada("Texto a imprimir: ", texto, sizeof(texto));
  int copias = lerInteiro("Quantas copias? ");
  int i;
- for(i = 0; i <= copias; i++) { /* laço: repete a impressão */
+ for(i = 0; i <= copias; i++) { /* laï¿½o: repete a impressï¿½o */
  int retorno = ImpressaoTexto(texto, 1, 4, 0); /* 3) chama o comando */
 AvancaPapel(1);
  if (retorno >= 0) { /* 4) confere o retorno */
@@ -245,9 +246,9 @@ AvancaPapel(1);
 
 
 void imprimirQRCode(void) {
-	if (!conexaoAberta) { /* 1) conexão aberta? */
+	if (!conexaoAberta) { /* 1) conexï¿½o aberta? */
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
- return; /* não está: avisa e SAI da função */
+ return; /* nï¿½o estï¿½: avisa e SAI da funï¿½ï¿½o */
  }
     const char * dados = "https://github.com/MaAlmeida11/projetoimpressora";
 int retorno = ImpressaoQRCode(dados, 6, 4);
@@ -255,9 +256,9 @@ Corte(3);
 }
 
 void imprimirCodigoBarras(void) {
-    if (!conexaoAberta) { /* 1) conexão aberta? */
+    if (!conexaoAberta) { /* 1) conexï¿½o aberta? */
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
- return; /* não está: avisa e SAI da função */
+ return; /* nï¿½o estï¿½: avisa e SAI da funï¿½ï¿½o */
  }
 int retorno = ImpressaoCodigoBarras(8, "{A012345678912", 100, 2, 3);
 Corte(3);
@@ -269,13 +270,13 @@ void imprimirXMLSAT(void) {
  return;
  }
  char *dadosXML = lerArquivo("XMLSAT.xml");
- if (dadosXML == NULL) { /* arquivo não encontrado */
+ if (dadosXML == NULL) { /* arquivo nï¿½o encontrado */
  printf("Nao foi possivel ler o XMLSAT.xml\n");
  return;
  }
  int retorno = ImprimeXMLSAT(dadosXML, 0);
  Corte(3);
- free(dadosXML); /* devolve a memória */
+ free(dadosXML); /* devolve a memï¿½ria */
  if (retorno == 0) {
  printf("XML SAT impresso!\n");
  } else {
@@ -289,9 +290,9 @@ void imprimirXMLSAT(void) {
 }
 
 void imprimirXMLCancelamentoSAT(void) {
-	if (!conexaoAberta) { /* 1) conexão aberta? */
+	if (!conexaoAberta) { /* 1) conexï¿½o aberta? */
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
- return; /* não está: avisa e SAI da função */
+ return; /* nï¿½o estï¿½: avisa e SAI da funï¿½ï¿½o */
  }
 	char *dadosXML = lerArquivo("CANC_SAT.xml");
 int retorno = ImprimeXMLCancelamentoSAT(dadosXML, ASS_QRCODE, 0);
@@ -302,25 +303,25 @@ int retorno = ImprimeXMLCancelamentoSAT(dadosXML, ASS_QRCODE, 0);
 }
 
 void abrirGavetaElgin(void) {
-    if (!conexaoAberta) { /* 1) conexão aberta? */
+    if (!conexaoAberta) { /* 1) conexï¿½o aberta? */
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
- return; /* não está: avisa e SAI da função */
+ return; /* nï¿½o estï¿½: avisa e SAI da funï¿½ï¿½o */
  }
 int retorno = AbreGavetaElgin(1, 50, 50);
 }
 
 void abrirGaveta(void) {
-    if (!conexaoAberta) { /* 1) conexão aberta? */
+    if (!conexaoAberta) { /* 1) conexï¿½o aberta? */
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
- return; /* não está: avisa e SAI da função */
+ return; /* nï¿½o estï¿½: avisa e SAI da funï¿½ï¿½o */
  }
 int retorno = AbreGaveta(1, 5, 10);
 }
 
 void emitirSinalSonoro(void) {
-	if (!conexaoAberta) { /* 1) conexão aberta? */
+	if (!conexaoAberta) { /* 1) conexï¿½o aberta? */
  printf("Conexao fechada. Abra a conexao antes (opcao 2).\n");
- return; /* não está: avisa e SAI da função */
+ return; /* nï¿½o estï¿½: avisa e SAI da funï¿½ï¿½o */
  }
     int retorno = SinalSonoro(2, 50, 5);
 }
